@@ -1,16 +1,15 @@
-const router = require("express").Router();
-const booksController = require("../../controllers/booksController");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-// Matches with "/api/books"
-router.route("/")
-  .get(booksController.findAll)
-  .post(booksController.create);
+const bookSchema = new Schema({
+  title: { type: String, required: true },
+  id: String,
+  authors: [String],
+  description: String,
+  thumbnail: String,
+  infoLink: String
+});
 
-// Matches with "/api/books/:id"
-router
-  .route("/:id")
-  .get(booksController.findById)
-  .put(booksController.update)
-  .delete(booksController.remove);
+const Book = mongoose.model("Book", bookSchema);
 
-module.exports = router;
+module.exports = Book;
